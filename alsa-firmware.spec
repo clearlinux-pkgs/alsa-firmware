@@ -4,7 +4,7 @@
 #
 Name     : alsa-firmware
 Version  : 1.0.29
-Release  : 2
+Release  : 3
 URL      : ftp://ftp.alsa-project.org/pub/firmware/alsa-firmware-1.0.29.tar.bz2
 Source0  : ftp://ftp.alsa-project.org/pub/firmware/alsa-firmware-1.0.29.tar.bz2
 Summary  : ALSA firmware package
