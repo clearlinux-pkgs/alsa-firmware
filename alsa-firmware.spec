@@ -4,10 +4,10 @@
 #
 Name     : alsa-firmware
 Version  : 1.2.1
-Release  : 4
+Release  : 5
 URL      : https://www.alsa-project.org/files/pub/firmware/alsa-firmware-1.2.1.tar.bz2
 Source0  : https://www.alsa-project.org/files/pub/firmware/alsa-firmware-1.2.1.tar.bz2
-Summary  : No detailed summary available
+Summary  : ALSA firmware package
 Group    : Development/Tools
 License  : BSD-3-Clause GPL-2.0
 Requires: alsa-firmware-data = %{version}-%{release}
@@ -46,7 +46,8 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1575261035
+export SOURCE_DATE_EPOCH=1575546236
+# -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
@@ -63,127 +64,130 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1575261035
+export SOURCE_DATE_EPOCH=1575546236
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/alsa-firmware
 cp %{_builddir}/alsa-firmware-1.2.1/COPYING %{buildroot}/usr/share/package-licenses/alsa-firmware/9db6e6f4189b7101178eef598c9985910e51456d
 cp %{_builddir}/alsa-firmware-1.2.1/aica/license.txt %{buildroot}/usr/share/package-licenses/alsa-firmware/f1ed3062fa64763c2e60ce4cd36a39117d44ee3c
 %make_install
+## install_append content
+mv %{buildroot}/lib/* %{buildroot}/usr/lib/
+## install_append end
 
 %files
 %defattr(-,root,root,-)
-/lib/firmware/aica_firmware.bin
-/lib/firmware/asihpi/dsp5000.bin
-/lib/firmware/asihpi/dsp6200.bin
-/lib/firmware/asihpi/dsp6205.bin
-/lib/firmware/asihpi/dsp6400.bin
-/lib/firmware/asihpi/dsp6600.bin
-/lib/firmware/asihpi/dsp8700.bin
-/lib/firmware/asihpi/dsp8900.bin
-/lib/firmware/cs46xx/ba1
-/lib/firmware/cs46xx/cwc4630
-/lib/firmware/cs46xx/cwcasync
-/lib/firmware/cs46xx/cwcbinhack
-/lib/firmware/cs46xx/cwcdma
-/lib/firmware/cs46xx/cwcsnoop
-/lib/firmware/ctefx-desktop.bin
-/lib/firmware/ctefx-r3di.bin
-/lib/firmware/ctefx.bin
-/lib/firmware/ctspeq.bin
-/lib/firmware/digiface_firmware.bin
-/lib/firmware/digiface_firmware_rev11.bin
-/lib/firmware/ea/3g_asic.fw
-/lib/firmware/ea/darla20_dsp.fw
-/lib/firmware/ea/darla24_dsp.fw
-/lib/firmware/ea/echo3g_dsp.fw
-/lib/firmware/ea/gina20_dsp.fw
-/lib/firmware/ea/gina24_301_asic.fw
-/lib/firmware/ea/gina24_301_dsp.fw
-/lib/firmware/ea/gina24_361_asic.fw
-/lib/firmware/ea/gina24_361_dsp.fw
-/lib/firmware/ea/indigo_dj_dsp.fw
-/lib/firmware/ea/indigo_djx_dsp.fw
-/lib/firmware/ea/indigo_dsp.fw
-/lib/firmware/ea/indigo_io_dsp.fw
-/lib/firmware/ea/indigo_iox_dsp.fw
-/lib/firmware/ea/layla20_asic.fw
-/lib/firmware/ea/layla20_dsp.fw
-/lib/firmware/ea/layla24_1_asic.fw
-/lib/firmware/ea/layla24_2A_asic.fw
-/lib/firmware/ea/layla24_2S_asic.fw
-/lib/firmware/ea/layla24_dsp.fw
-/lib/firmware/ea/loader_dsp.fw
-/lib/firmware/ea/mia_dsp.fw
-/lib/firmware/ea/mona_2_asic.fw
-/lib/firmware/ea/mona_301_1_asic_48.fw
-/lib/firmware/ea/mona_301_1_asic_96.fw
-/lib/firmware/ea/mona_301_dsp.fw
-/lib/firmware/ea/mona_361_1_asic_48.fw
-/lib/firmware/ea/mona_361_1_asic_96.fw
-/lib/firmware/ea/mona_361_dsp.fw
-/lib/firmware/emu/audio_dock.fw
-/lib/firmware/emu/emu0404.fw
-/lib/firmware/emu/emu1010_notebook.fw
-/lib/firmware/emu/emu1010b.fw
-/lib/firmware/emu/hana.fw
-/lib/firmware/emu/micro_dock.fw
-/lib/firmware/ess/maestro3_assp_kernel.fw
-/lib/firmware/ess/maestro3_assp_minisrc.fw
-/lib/firmware/korg/k1212.dsp
-/lib/firmware/mixart/miXart8.elf
-/lib/firmware/mixart/miXart8.xlx
-/lib/firmware/mixart/miXart8AES.xlx
-/lib/firmware/multiface_firmware.bin
-/lib/firmware/multiface_firmware_rev11.bin
-/lib/firmware/pcxhr/b321_512.b56
-/lib/firmware/pcxhr/d321_512.d56
-/lib/firmware/pcxhr/dspb1222e.b56
-/lib/firmware/pcxhr/dspb1222hr.b56
-/lib/firmware/pcxhr/dspb882e.b56
-/lib/firmware/pcxhr/dspb882hr.b56
-/lib/firmware/pcxhr/dspb924.b56
-/lib/firmware/pcxhr/dspd1222.d56
-/lib/firmware/pcxhr/dspd222.d56
-/lib/firmware/pcxhr/dspd882.d56
-/lib/firmware/pcxhr/dspe882.e56
-/lib/firmware/pcxhr/dspe924.e56
-/lib/firmware/pcxhr/e321_512.e56
-/lib/firmware/pcxhr/xc_1_882.dat
-/lib/firmware/pcxhr/xi_1_882.dat
-/lib/firmware/pcxhr/xlxc1222e.dat
-/lib/firmware/pcxhr/xlxc1222hr.dat
-/lib/firmware/pcxhr/xlxc222.dat
-/lib/firmware/pcxhr/xlxc882e.dat
-/lib/firmware/pcxhr/xlxc882hr.dat
-/lib/firmware/pcxhr/xlxc924.dat
-/lib/firmware/pcxhr/xlxint.dat
-/lib/firmware/rpm_firmware.bin
-/lib/firmware/sb16/alaw_main.csp
-/lib/firmware/sb16/ima_adpcm_capture.csp
-/lib/firmware/sb16/ima_adpcm_init.csp
-/lib/firmware/sb16/ima_adpcm_playback.csp
-/lib/firmware/sb16/mulaw_main.csp
-/lib/firmware/turtlebeach/msndinit.bin
-/lib/firmware/turtlebeach/msndperm.bin
-/lib/firmware/turtlebeach/pndsperm.bin
-/lib/firmware/turtlebeach/pndspini.bin
-/lib/firmware/vx/bd56002.boot
-/lib/firmware/vx/bd563s3.boot
-/lib/firmware/vx/bd563v2.boot
-/lib/firmware/vx/bx_1_vp4.b56
-/lib/firmware/vx/bx_1_vxp.b56
-/lib/firmware/vx/l_1_v22.d56
-/lib/firmware/vx/l_1_vp4.d56
-/lib/firmware/vx/l_1_vx2.d56
-/lib/firmware/vx/l_1_vxp.d56
-/lib/firmware/vx/x1_1_vp4.xlx
-/lib/firmware/vx/x1_1_vx2.xlx
-/lib/firmware/vx/x1_1_vxp.xlx
-/lib/firmware/vx/x1_2_v22.xlx
-/lib/firmware/yamaha/ds1_ctrl.fw
-/lib/firmware/yamaha/ds1_dsp.fw
-/lib/firmware/yamaha/ds1e_ctrl.fw
-/lib/firmware/yamaha/yss225_registers.bin
+/usr/lib/aica_firmware.bin
+/usr/lib/asihpi/dsp5000.bin
+/usr/lib/asihpi/dsp6200.bin
+/usr/lib/asihpi/dsp6205.bin
+/usr/lib/asihpi/dsp6400.bin
+/usr/lib/asihpi/dsp6600.bin
+/usr/lib/asihpi/dsp8700.bin
+/usr/lib/asihpi/dsp8900.bin
+/usr/lib/cs46xx/ba1
+/usr/lib/cs46xx/cwc4630
+/usr/lib/cs46xx/cwcasync
+/usr/lib/cs46xx/cwcbinhack
+/usr/lib/cs46xx/cwcdma
+/usr/lib/cs46xx/cwcsnoop
+/usr/lib/ctefx-desktop.bin
+/usr/lib/ctefx-r3di.bin
+/usr/lib/ctefx.bin
+/usr/lib/ctspeq.bin
+/usr/lib/digiface_firmware.bin
+/usr/lib/digiface_firmware_rev11.bin
+/usr/lib/ea/3g_asic.fw
+/usr/lib/ea/darla20_dsp.fw
+/usr/lib/ea/darla24_dsp.fw
+/usr/lib/ea/echo3g_dsp.fw
+/usr/lib/ea/gina20_dsp.fw
+/usr/lib/ea/gina24_301_asic.fw
+/usr/lib/ea/gina24_301_dsp.fw
+/usr/lib/ea/gina24_361_asic.fw
+/usr/lib/ea/gina24_361_dsp.fw
+/usr/lib/ea/indigo_dj_dsp.fw
+/usr/lib/ea/indigo_djx_dsp.fw
+/usr/lib/ea/indigo_dsp.fw
+/usr/lib/ea/indigo_io_dsp.fw
+/usr/lib/ea/indigo_iox_dsp.fw
+/usr/lib/ea/layla20_asic.fw
+/usr/lib/ea/layla20_dsp.fw
+/usr/lib/ea/layla24_1_asic.fw
+/usr/lib/ea/layla24_2A_asic.fw
+/usr/lib/ea/layla24_2S_asic.fw
+/usr/lib/ea/layla24_dsp.fw
+/usr/lib/ea/loader_dsp.fw
+/usr/lib/ea/mia_dsp.fw
+/usr/lib/ea/mona_2_asic.fw
+/usr/lib/ea/mona_301_1_asic_48.fw
+/usr/lib/ea/mona_301_1_asic_96.fw
+/usr/lib/ea/mona_301_dsp.fw
+/usr/lib/ea/mona_361_1_asic_48.fw
+/usr/lib/ea/mona_361_1_asic_96.fw
+/usr/lib/ea/mona_361_dsp.fw
+/usr/lib/emu/audio_dock.fw
+/usr/lib/emu/emu0404.fw
+/usr/lib/emu/emu1010_notebook.fw
+/usr/lib/emu/emu1010b.fw
+/usr/lib/emu/hana.fw
+/usr/lib/emu/micro_dock.fw
+/usr/lib/ess/maestro3_assp_kernel.fw
+/usr/lib/ess/maestro3_assp_minisrc.fw
+/usr/lib/korg/k1212.dsp
+/usr/lib/mixart/miXart8.elf
+/usr/lib/mixart/miXart8.xlx
+/usr/lib/mixart/miXart8AES.xlx
+/usr/lib/multiface_firmware.bin
+/usr/lib/multiface_firmware_rev11.bin
+/usr/lib/pcxhr/b321_512.b56
+/usr/lib/pcxhr/d321_512.d56
+/usr/lib/pcxhr/dspb1222e.b56
+/usr/lib/pcxhr/dspb1222hr.b56
+/usr/lib/pcxhr/dspb882e.b56
+/usr/lib/pcxhr/dspb882hr.b56
+/usr/lib/pcxhr/dspb924.b56
+/usr/lib/pcxhr/dspd1222.d56
+/usr/lib/pcxhr/dspd222.d56
+/usr/lib/pcxhr/dspd882.d56
+/usr/lib/pcxhr/dspe882.e56
+/usr/lib/pcxhr/dspe924.e56
+/usr/lib/pcxhr/e321_512.e56
+/usr/lib/pcxhr/xc_1_882.dat
+/usr/lib/pcxhr/xi_1_882.dat
+/usr/lib/pcxhr/xlxc1222e.dat
+/usr/lib/pcxhr/xlxc1222hr.dat
+/usr/lib/pcxhr/xlxc222.dat
+/usr/lib/pcxhr/xlxc882e.dat
+/usr/lib/pcxhr/xlxc882hr.dat
+/usr/lib/pcxhr/xlxc924.dat
+/usr/lib/pcxhr/xlxint.dat
+/usr/lib/rpm_firmware.bin
+/usr/lib/sb16/alaw_main.csp
+/usr/lib/sb16/ima_adpcm_capture.csp
+/usr/lib/sb16/ima_adpcm_init.csp
+/usr/lib/sb16/ima_adpcm_playback.csp
+/usr/lib/sb16/mulaw_main.csp
+/usr/lib/turtlebeach/msndinit.bin
+/usr/lib/turtlebeach/msndperm.bin
+/usr/lib/turtlebeach/pndsperm.bin
+/usr/lib/turtlebeach/pndspini.bin
+/usr/lib/vx/bd56002.boot
+/usr/lib/vx/bd563s3.boot
+/usr/lib/vx/bd563v2.boot
+/usr/lib/vx/bx_1_vp4.b56
+/usr/lib/vx/bx_1_vxp.b56
+/usr/lib/vx/l_1_v22.d56
+/usr/lib/vx/l_1_vp4.d56
+/usr/lib/vx/l_1_vx2.d56
+/usr/lib/vx/l_1_vxp.d56
+/usr/lib/vx/x1_1_vp4.xlx
+/usr/lib/vx/x1_1_vx2.xlx
+/usr/lib/vx/x1_1_vxp.xlx
+/usr/lib/vx/x1_2_v22.xlx
+/usr/lib/yamaha/ds1_ctrl.fw
+/usr/lib/yamaha/ds1_dsp.fw
+/usr/lib/yamaha/ds1e_ctrl.fw
+/usr/lib/yamaha/yss225_registers.bin
 
 %files data
 %defattr(-,root,root,-)
