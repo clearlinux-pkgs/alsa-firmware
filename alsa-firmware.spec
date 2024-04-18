@@ -9,7 +9,7 @@
 #
 Name     : alsa-firmware
 Version  : 1.2.4
-Release  : 8
+Release  : 9
 URL      : https://www.alsa-project.org/files/pub/firmware/alsa-firmware-1.2.4.tar.bz2
 Source0  : https://www.alsa-project.org/files/pub/firmware/alsa-firmware-1.2.4.tar.bz2
 Source1  : https://www.alsa-project.org/files/pub/firmware/alsa-firmware-1.2.4.tar.bz2.sig
@@ -57,16 +57,13 @@ gpg --homedir .gnupg --status-fd 1 --verify %{SOURCE1} %{SOURCE0} > gpg.status
 grep -E '^\[GNUPG:\] (GOODSIG|EXPKEYSIG) 8380596DA6E59C91' gpg.status
 %setup -q -n alsa-firmware-1.2.4
 cd %{_builddir}/alsa-firmware-1.2.4
-pushd ..
-cp -a alsa-firmware-1.2.4 buildavx2
-popd
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1713219731
+export SOURCE_DATE_EPOCH=1713449065
 export GCC_IGNORE_WERROR=1
 CLEAR_INTERMEDIATE_CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 CLEAR_INTERMEDIATE_FCFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
@@ -82,25 +79,12 @@ export GOAMD64=v2
 %configure --disable-static
 make  %{?_smp_mflags}
 
-unset PKG_CONFIG_PATH
-pushd ../buildavx2/
-GOAMD64=v3
-CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS -march=x86-64-v3 -Wl,-z,x86-64-v3 "
-CXXFLAGS="$CLEAR_INTERMEDIATE_CXXFLAGS -march=x86-64-v3 -Wl,-z,x86-64-v3 "
-FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -march=x86-64-v3 -Wl,-z,x86-64-v3 "
-FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS -march=x86-64-v3 "
-LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS -march=x86-64-v3 "
-%configure --disable-static
-make  %{?_smp_mflags}
-popd
 %check
 export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check
-cd ../buildavx2;
-make %{?_smp_mflags} check || :
 
 %install
 export GCC_IGNORE_WERROR=1
@@ -114,27 +98,21 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1713219731
+export SOURCE_DATE_EPOCH=1713449065
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/alsa-firmware
 cp %{_builddir}/alsa-firmware-%{version}/COPYING %{buildroot}/usr/share/package-licenses/alsa-firmware/9db6e6f4189b7101178eef598c9985910e51456d || :
 cp %{_builddir}/alsa-firmware-%{version}/aica/license.txt %{buildroot}/usr/share/package-licenses/alsa-firmware/f1ed3062fa64763c2e60ce4cd36a39117d44ee3c || :
 cp %{_builddir}/alsa-firmware-%{version}/echoaudio/license.txt %{buildroot}/usr/share/package-licenses/alsa-firmware/e16db4bd79d477e0f004bab97ed4de580acf476e || :
 export GOAMD64=v2
-GOAMD64=v3
-pushd ../buildavx2/
-%make_install_v3
-popd
 GOAMD64=v2
 %make_install
 ## install_append content
 mv %{buildroot}/lib/* %{buildroot}/usr/lib/
 ## install_append end
-/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
-/V3/lib/firmware/mixart/miXart8.elf
 /usr/lib/aica_firmware.bin
 /usr/lib/asihpi/dsp5000.bin
 /usr/lib/asihpi/dsp6200.bin
@@ -250,7 +228,6 @@ mv %{buildroot}/lib/* %{buildroot}/usr/lib/
 
 %files data
 %defattr(-,root,root,-)
-/V3/usr/share/alsa/firmware/mixartloader/miXart8.elf
 /usr/share/alsa/firmware/hdsploader/digiface_firmware.bin
 /usr/share/alsa/firmware/hdsploader/digiface_firmware_rev11.bin
 /usr/share/alsa/firmware/hdsploader/multiface_firmware.bin
