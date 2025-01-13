@@ -1,0 +1,2 @@
+# Put firmware under /usr, not directly under /lib, because that breaks permissions in our filesystem layout
+--with-hotplug-dir=/usr/lib/firmware
